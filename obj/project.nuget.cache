@@ -1,8 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "PYeyJqQZHprvhJf/9zCccOhvsqi29LQ+nn7qW02FbzU6/YcquuMi+/QU9x2zpQKVRcqO5gMpDTkbaYfsS+JdWg==",
+  "dgSpecHash": "OdeadK84DmVp9STT0UAIr5026SAvc2//yaBESMl/nyUEYW9AHqF7ArPA+miRc39b5Kd5Kye1zyvIF92iHt/wOw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Rafig\\Desktop\\aaaa\\HotelsManager\\HotelsManager.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Rafig\\.nuget\\packages\\dapper\\2.1.28\\dapper.2.1.28.nupkg.sha512",
+    "C:\\Users\\Rafig\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.15\\microsoft.netcore.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\Rafig\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.15\\microsoft.windowsdesktop.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\Rafig\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.15\\microsoft.aspnetcore.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\Rafig\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\7.0.15\\microsoft.netcore.app.host.win-x64.7.0.15.nupkg.sha512"
+  ],
   "logs": []
 }
