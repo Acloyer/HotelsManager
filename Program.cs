@@ -1,13 +1,13 @@
 ﻿using System.Net;
 using System.Reflection;
 using HotelsManager.Models;
-// using HotelsManager.Controllers;
-// using HotelsManager.Attributes.Base;
-// using HotelsManager.Controllers.Base;
+using HotelsManager.Controllers;
+using HotelsManager.Attributes.Base;
+using HotelsManager.Controllers.Base;
 
 
 HttpListener httpListener = new HttpListener();
-const string connectionString = @"Data Source=ACS; Initial Catalog = HotelsDb; Integrated Security = SSPI;TrustServerCertificate=True;"
+const string connectionString = @"Data Source=ACS; Initial Catalog = HotelsDb; Integrated Security = SSPI;TrustServerCertificate=True;";
 
 httpListener.Prefixes.Add($"http://*:{port}/");
 
