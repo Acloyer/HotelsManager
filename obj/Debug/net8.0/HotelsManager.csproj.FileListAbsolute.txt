@@ -1,0 +1,15 @@
+C:\Users\Rafig\Desktop\aaaa\HotelsManager\bin\Debug\net8.0\HotelsManager.exe
+C:\Users\Rafig\Desktop\aaaa\HotelsManager\bin\Debug\net8.0\HotelsManager.deps.json
+C:\Users\Rafig\Desktop\aaaa\HotelsManager\bin\Debug\net8.0\HotelsManager.runtimeconfig.json
+C:\Users\Rafig\Desktop\aaaa\HotelsManager\bin\Debug\net8.0\HotelsManager.dll
+C:\Users\Rafig\Desktop\aaaa\HotelsManager\bin\Debug\net8.0\HotelsManager.pdb
+C:\Users\Rafig\Desktop\aaaa\HotelsManager\obj\Debug\net8.0\HotelsManager.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Rafig\Desktop\aaaa\HotelsManager\obj\Debug\net8.0\HotelsManager.AssemblyInfoInputs.cache
+C:\Users\Rafig\Desktop\aaaa\HotelsManager\obj\Debug\net8.0\HotelsManager.AssemblyInfo.cs
+C:\Users\Rafig\Desktop\aaaa\HotelsManager\obj\Debug\net8.0\HotelsManager.csproj.CoreCompileInputs.cache
+C:\Users\Rafig\Desktop\aaaa\HotelsManager\obj\Debug\net8.0\HotelsManager.sourcelink.json
+C:\Users\Rafig\Desktop\aaaa\HotelsManager\obj\Debug\net8.0\HotelsManager.dll
+C:\Users\Rafig\Desktop\aaaa\HotelsManager\obj\Debug\net8.0\refint\HotelsManager.dll
+C:\Users\Rafig\Desktop\aaaa\HotelsManager\obj\Debug\net8.0\HotelsManager.pdb
+C:\Users\Rafig\Desktop\aaaa\HotelsManager\obj\Debug\net8.0\HotelsManager.genruntimeconfig.cache
+C:\Users\Rafig\Desktop\aaaa\HotelsManager\obj\Debug\net8.0\ref\HotelsManager.dll

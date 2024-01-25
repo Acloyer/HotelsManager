@@ -1,2 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using System.Net;
+using System.Text;
+using System.Text.Json;
+using HotelsManager.Models;
