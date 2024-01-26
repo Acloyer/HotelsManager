@@ -11,7 +11,7 @@ using HotelsManager.Attributes;
 
 public class HotelsController : ControllerBase
 {
-    private const string ConnectionString = @"Data Source=ACS; Initial Catalog = HotelsDb; Integrated Security = SSPI;TrustServerCertificate=True;";
+    private const string ConnectionString = @"Data Source=LAPTOP-8U7UGFTE; Initial Catalog = HotelsDb; Integrated Security = SSPI;TrustServerCertificate=True;";
 
     [HttpGet("GetAll")]
     public async Task GethotelsAsync()

@@ -7,13 +7,13 @@ using HotelsManager.Controllers.Base;
 
 
 HttpListener httpListener = new HttpListener();
-const string connectionString = @"Data Source=ACS; Initial Catalog = HotelsDb; Integrated Security = SSPI;TrustServerCertificate=True;";
+// const string connectionString = @"Data Source=LAPTOP-8U7UGFTE; Initial Catalog = HotelsDb; Integrated Security = SSPI;TrustServerCertificate=True;";
+const int port = 8080;
 
 httpListener.Prefixes.Add($"http://*:{port}/");
 
 httpListener.Start();
 
-const int port = 8080;
 Console.WriteLine($"Server started on port {port}...");
 
 while (true)
