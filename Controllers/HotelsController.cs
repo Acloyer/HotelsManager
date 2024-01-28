@@ -1,5 +1,4 @@
 namespace HotelsManager.Controllers;
-
 using System.Data.SqlClient;
 using System.Net;
 using System.Text.Json;
