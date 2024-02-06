@@ -1,2 +1,0 @@
-# HotelsManager
- Менеджер отелей
