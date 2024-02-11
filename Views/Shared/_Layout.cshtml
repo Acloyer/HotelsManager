@@ -1,5 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@inject IAuthorizationService authenticationService
+
+@{
+    bool isAuthenticated = base.User.Identity.IsAuthenticated;
+    var administratorsAuthorizationResult = await authenticationService.AuthorizeAsync(base.User, "Administrators");
+    bool isAdmin = administratorsAuthorizationResult.Succeeded;
+}
+
+
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,6 +18,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/HotelsManager.styles.css" asp-append-version="true" />
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -20,12 +31,36 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+
+                        @if (isAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Identity" asp-action="GetClaims">Claims</a>
+                            </li>
+                            if(isAdmin) {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Home" asp-action="Secret">Secret</a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Identity" asp-action="Login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Identity" asp-action="Registration">Registration</a>
+                            </li>
+                        }
                     </ul>
+
+                    @if (isAuthenticated)
+                    {
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">@ViewData["Username"]</a>
+                        <a class="nav-link text-dark" asp-controller="Identity" asp-action="LogOut">LogOut</a>
+                    }
                 </div>
             </div>
         </nav>
@@ -38,7 +73,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - HotelsManager - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - HotelsManager - <a asp-area="" asp-controller="Home"></a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -46,4 +81,5 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>
