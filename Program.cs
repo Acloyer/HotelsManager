@@ -17,8 +17,6 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Administrators", (policyBuilder) =>
     {
-        // policyBuilder.RequireClaim("admin");
-
         policyBuilder.RequireClaim(ClaimTypes.Role, "admin");
     });
 });
