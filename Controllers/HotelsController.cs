@@ -2,7 +2,6 @@ namespace HotelsManager.Controllers;
 
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
-using HotelsManager.Models;
 
 public class HotelsController : Controller
 {
