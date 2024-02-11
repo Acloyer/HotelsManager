@@ -18,10 +18,15 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+// app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapDefaultControllerRoute();
+// app.MapControllerRoute(
+//     name: "default",
+//     pattern: "{controller=Test}/{action=Get}");
 
 app.Run();
+
+
+// Controller/Method
+// Home/Index

@@ -1,22 +1,25 @@
+namespace HotelsManager.Controllers;
 
-using System.Diagnostics;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using HotelsManager.Models;
 
-namespace HotelsManager.Controllers;
-
 public class HotelsController : Controller
 {
-    private readonly Hotels _context;
-
-    public HotelsController(Hotels context)
+    public IActionResult Profile(int id)
     {
-        _context = context;
-    }
+        var hotelProfileJson = System.IO.File.ReadAllText("Assets/hotels_profile.json");
 
-    public IActionResult Index()
-    {
-        var products = _context.Name.ToList();
-        return View(products);
+        var jsonOptions = new JsonSerializerOptions() {
+            PropertyNameCaseInsensitive = true,
+        };
+        var profiles = JsonSerializer.Deserialize<IEnumerable<Hotel>>(hotelProfileJson, jsonOptions);
+
+        var profile = profiles?.FirstOrDefault(p => p.Id == id);
+
+        if(profile is null)
+            return base.NotFound();
+
+        return View(profile);
     }
 }
