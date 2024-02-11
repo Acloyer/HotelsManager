@@ -1,16 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+namespace HotelsManager.Dtos
 
-namespace HotelsManager.Dtos;
-
-public class LoginDto
 {
-    [JsonPropertyName("login")]
-    public string? Login { get; set; }
-
-    [JsonPropertyName("password")]
-    public string? Password { get; set; }
+    public class LoginDto
+    {
+        public string? ReturnUrl { get; set; }
+        public string? Login { get; set; }
+        public string? Password { get; set; }
+    }
 }
