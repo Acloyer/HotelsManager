@@ -1,19 +1,37 @@
 namespace HotelsManager.Controllers;
 
-using System.Net;
-using HotelsManager.Attributes;
-using HotelsManager.Controllers.Base;
+using System.Diagnostics;
+using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using HotelsManager.Models;
 
-public class HomeController : ControllerBase
+
+public class HomeController : Controller
 {
-    [HttpGet]
-    public async Task HomePageAsync()
-    {
-        using var writer = new StreamWriter(base.HttpContext.Response.OutputStream);
+    // public HomeController()
+    // {
+    // // System.Console.WriteLine("HomeController created!");
+    // }
 
-        var pageHtml = await File.ReadAllTextAsync("Views/Home.html");
-        await writer.WriteLineAsync(pageHtml);
-        base.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
-        base.HttpContext.Response.ContentType = "text/html";
+    public IActionResult Index()
+    {
+        var hotelsJson = System.IO.File.ReadAllText("Assets/hotels_profile.json");
+        var hotels = JsonSerializer.Deserialize<IEnumerable<Hotel>>(hotelsJson);
+        
+
+        return base.View(hotels);
+    }
+    [HttpGet]
+    [Authorize(Policy = "Administrators")]
+    public IActionResult Secret()
+    {
+        return View();
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

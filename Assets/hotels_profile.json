@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "name": "Hotel Low",
+        "price": 1000.0
+    },
+    {
+        "id": 2,
+        "name": "Hotel Mid",
+        "price": 5000.0
+    },
+    {
+        "id": 3,
+        "name": "Hotel High",
+        "price": 10000.0
+    }
+]
