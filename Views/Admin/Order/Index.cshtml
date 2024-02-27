@@ -5,9 +5,11 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<p>
+@*<p>
     <button type="button" class="btn btn-outline-success" onclick="location.href='@Url.Action("CreateOrder", "AdminOrder")'">Создать заказ</button>
-</p>
+</p>*@
+<p/>
+<br />
 
 <table class="table">
     <tr>
@@ -16,6 +18,7 @@
         <th>Звезды</th>
         <th>Название отеля</th>
         <th>Цена</th>
+        <th>Id отеля</th>
     </tr>
 
     @foreach (var item in Model)
@@ -26,6 +29,7 @@
         <td>@item.HotelStars</td>
         <td>@item.HotelName</td>
         <td>@item.HotelPrice@item.HotelCurrency</td>
+        <td>@item.HotelId</td>
 
         <td>
             @{
