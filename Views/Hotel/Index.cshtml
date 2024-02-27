@@ -35,7 +35,7 @@
             <td>@item.Price@item.Currency</td>
 
             <td>
-                <a id="btnShowNotification" runat="server" OnClick="btnShowNotification_Click" asp-controller="Hotel" asp-action="Index" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm m-3 ms-0">Купить номер</a>
+                <a id="btnShowNotification" runat="server" OnClick="showNotification('Вы успешно купили номер в отеле. <hr /> Подробнее про ваш заказ можете ознакомиться в списке ваших заказов.')" asp-controller="Hotel" asp-action="Index" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm m-3 ms-0">Купить номер</a>
             </td>
         </tr>
     }
@@ -62,10 +62,4 @@
             $notification.alert('close');
         }, 2000);
     }
-
-    $(document).ready(function () {
-        $('#btnShowNotification').click(function () {
-            showNotification('Вы успешно купили номер в отеле. <hr /> Подробнее про ваш заказ можете ознакомиться в списке ваших заказов.');
-        });
-    });
 </script>
