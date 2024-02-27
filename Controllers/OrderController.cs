@@ -47,7 +47,7 @@ namespace HotelsManager.Controllers
         [Authorize]
         public IActionResult Delete(int id)
         {
-            // логика удаления
+            // логика 
             repo.Delete(id, User.Identity.Name);
             //
             return base.RedirectToAction(controllerName: "Order", actionName: "Index");
