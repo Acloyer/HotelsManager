@@ -25,8 +25,6 @@ namespace HotelsManager.Controllers
             return View("~/Views/Admin/Hotel/Index.cshtml", repo.GetHotels());
         }
 
-        //
-
         [Authorize(Policy = "Administrators")]
         public ActionResult Details(int id)
         {
@@ -46,9 +44,6 @@ namespace HotelsManager.Controllers
         [Authorize(Policy = "Administrators")]
         public ActionResult CreateHotel(Hotel hotel)
         {
-            Console.WriteLine(hotel.Name);
-            Console.WriteLine(hotel.Price);
-            Console.WriteLine(hotel.Currency);
             repo.Create(hotel);
             return RedirectToAction("Index");
         }
@@ -99,7 +94,6 @@ namespace HotelsManager.Controllers
                 Hotel hotel = repo.Get(id);
                 if (hotel != null)
                 {
-                    Console.WriteLine("view dlete");
                     return View("~/Views/Admin/Hotel/DeleteHotel.cshtml", hotel);
                 }
                 return NotFound();
@@ -118,7 +112,6 @@ namespace HotelsManager.Controllers
             {
                 repo.Delete(id);
                 return View("~/Views/Admin/Hotel/deletedhotel228.cshtml", repo.GetHotels());
-                /*return RedirectToAction("Index");*/
             }
         }
 
