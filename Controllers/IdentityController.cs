@@ -150,7 +150,6 @@ namespace HotelsManager.Controllers
                     else
                     {
                         canRegister = false;
-                        Console.WriteLine(user.Name + " is exists");
                         break;
                         /*return View();*/
                     }
@@ -161,15 +160,12 @@ namespace HotelsManager.Controllers
                     HotelsManager.Models.Users.User user1 = new HotelsManager.Models.Users.User(lastId + 1, loginDto.Login, loginDto.Password);
                     try
                     {
-                        Console.WriteLine(loginDto.Login);
                         repo.Create(user1);
                     }
                     catch (Exception ex)
                     {
                         // Выводите информацию об ошибке или логируйте ее
-                        Console.WriteLine("An error occurred: " + ex.Message);
                     }
-                    Console.WriteLine(login);
                     var roleName = login.Contains("ADM_")
                             ? "admin"
                             : "user";
@@ -193,12 +189,6 @@ namespace HotelsManager.Controllers
 
                     return base.RedirectPermanent(loginDto.ReturnUrl);
                 }
-                /*}
-                else
-                {
-                    Console.WriteLine("Неправильный логин или пароль!");
-                    return View(); // нужно сделать чтобы текст в html равнялся = "неправильный логин или пароль"
-                }*/
                 return View();
             }
             else
