@@ -1,0 +1,19 @@
+@model HotelsManager.Models.Users.User
+@{
+    ViewData["Title"] = "Админ панель";
+}
+<h2>@ViewBag.Title</h2>
+<div>
+    <div>
+        <form asp-controller="Admin" asp-action="AdminPanel" method="post">
+        </form>
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <p class="font-monospace">Здравствуй админ!</p>
+                <button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("UserList", "Admin")'">Пользователи</button>
+                <button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("Index", "AdminHotel")'">Отели</button>
+                <button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("Index", "AdminOrder")'">Заказы</button>
+            </li>
+        </ul>
+    </div>
+</div>
