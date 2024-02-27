@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Microsoft.Data.SqlClient;
+using HotelsManager.Models.Hotels;
 using HotelsManager.Models.Orders;
 
 namespace HotelsManager.Models.Repository
@@ -31,10 +32,27 @@ namespace HotelsManager.Models.Repository
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                if (order.UserName != null && order.HotelId != null && order.HotelName != null && order.HotelPrice != null && order.HotelCurrency != null)
+                if (order.HotelId != null)
                 {
+                    string query = "SELECT * FROM Hotels WHERE Id = @HotelId";
+                    var a = db.Query<Hotel>(query, new {HotelId = order.HotelId}).ToList();
+                    var UserName = order.UserName;
+                    var HotelId = 0;
+                    var HotelName = "";
+                    decimal? HotelPrice = 0.0m;
+                    var HotelCurrency = "";
+                    var HotelStars = 0;
+                    foreach(var asa in a)
+                    {
+                        HotelId = asa.Id;
+                        HotelName = asa.Name;
+                        HotelPrice = asa.Price;
+                        HotelCurrency = asa.Currency;
+                        HotelStars = asa.Stars;
+                    }
                     var sqlQuery = "UPDATE Orders SET UserName = @UserName, HotelId = @HotelId, HotelName = @HotelName, HotelPrice = @HotelPrice, HotelCurrency = @HotelCurrency, HotelStars = @HotelStars WHERE Id = @Id";
-                    db.Execute(sqlQuery, order);
+                    db.Execute(sqlQuery, new { UserName = UserName, HotelId = HotelId, HotelName = HotelName, HotelPrice = HotelPrice, HotelCurrency = HotelCurrency, HotelStars = HotelStars, Id = order.Id});
+
                 }
             }
         }
