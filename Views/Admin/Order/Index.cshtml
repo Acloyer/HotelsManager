@@ -1,0 +1,39 @@
+@model IEnumerable<HotelsManager.Models.Orders.Order>
+@{
+    ViewData["Title"] = "Список заказов";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <button type="button" class="btn btn-outline-success" onclick="location.href='@Url.Action("CreateOrder", "AdminOrder")'">Создать заказ</button>
+</p>
+
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Имя клиента</th>
+        <th>Звезды</th>
+        <th>Название отеля</th>
+        <th>Цена</th>
+    </tr>
+
+    @foreach (var item in Model)
+{
+    <tr>
+        <td>@item.Id</td>
+        <td>@item.UserName</td>
+        <td>@item.HotelStars</td>
+        <td>@item.HotelName</td>
+        <td>@item.HotelPrice@item.HotelCurrency</td>
+
+        <td>
+            @{
+                string id1 = (item.Id).ToString();
+            }
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("EditOrder", "AdminOrder", new { id = id1})'">Изменить</button>@* <b>|</b>*@
+            @*<button type="button" class="btn btn-outline-danger" onclick="location.href='@Url.Action("DeleteOrder", "AdminOrder", new { id = id1})'">Удалить</button>*@
+        </td>
+    </tr>
+}
+</table>
