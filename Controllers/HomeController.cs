@@ -5,26 +5,29 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using HotelsManager.Models;
-
+using HotelsManager.Models.Users;
+using HotelsManager.Models.Repository;
 
 public class HomeController : Controller
 {
-    // public HomeController()
-    // {
-    // // System.Console.WriteLine("HomeController created!");
-    // }
-
-    public IActionResult Index()
+    IUserRepository repo;
+    public HomeController(IUserRepository r)
     {
-        var hotelsJson = System.IO.File.ReadAllText("Assets/hotels_profile.json");
-        var hotels = JsonSerializer.Deserialize<IEnumerable<Hotel>>(hotelsJson);
-        
-
-        return base.View(hotels);
+        repo = r;
     }
+    public ActionResult Index()
+    {
+        return View(repo.GetUsers());
+    }
+
+    public ActionResult Loading()
+    {
+        return View("~/Views/Home/Loading.cshtml");
+    }
+
     [HttpGet]
-    [Authorize(Policy = "Administrators")]
-    public IActionResult Secret()
+    [Authorize]
+    public IActionResult Home()
     {
         return View();
     }
