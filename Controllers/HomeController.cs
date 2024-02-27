@@ -15,6 +15,7 @@ public class HomeController : Controller
     {
         repo = r;
     }
+
     public ActionResult Index()
     {
         return View(repo.GetUsers());
