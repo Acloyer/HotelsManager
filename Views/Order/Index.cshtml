@@ -1,0 +1,57 @@
+@inject IAuthorizationService authenticationService
+@model IEnumerable<HotelsManager.Models.Orders.Order>
+@{
+    ViewData["Title"] = "Мои заказы";
+    decimal? result = 0.0m;
+    var administratorsAuthorizationResult = await authenticationService.AuthorizeAsync(base.User, "Administrators");
+    bool isAdmin = administratorsAuthorizationResult.Succeeded;
+    Console.Write("admi333n");
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <tr>
+        @if(isAdmin){
+            <th>Id</th>
+        }
+        <th>Название отеля</th>
+        <th>Звезды</th>
+        <th>Цена</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        @{
+            if(item.HotelCurrency == "$"){
+                result += (item.HotelPrice)*1.7m;
+            }
+            if(item.HotelCurrency == "€"){
+                result += (item.HotelPrice)*2m;
+            }
+            if(item.HotelCurrency == "₽"){
+                result += (item.HotelPrice)/54.49m;
+            }
+            if(item.HotelCurrency == "₼"){
+                result += item.HotelPrice;
+            }
+        }
+        @if(isAdmin){
+            <th>@item.HotelId</th>
+        }
+        <td>@item.HotelName</td>
+        <td>@item.HotelStars</td>
+        <td>@item.HotelPrice@item.HotelCurrency</td>
+        <td>
+            <a id="btnShowNotification" runat="server" OnClick="btnShowNotification_Click" asp-controller="Order" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm m-3 ms-0">Отменить заказ</a>
+        </td>
+    </tr>
+    }
+
+    <tr>
+        <th>Итоговая сумма: </th>
+        <td></td>
+        <td>@result₼</td>
+    </tr>
+</table>
