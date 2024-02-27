@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using HotelsManager.Models;
 using HotelsManager.Models.Users;
 using HotelsManager.Models.Repository;
+using HotelsManager.Dtos;
 
 namespace HotelsManager.Controllers
 {
@@ -76,6 +77,11 @@ namespace HotelsManager.Controllers
             }
         }
 
+        public ActionResult LoginToUserAccount(string rUrl, string name, string password)
+        {
+            LoginDto loginDto = new LoginDto(rUrl, name, password);
+            return RedirectToAction("~/Controllers/IdentityController.cs/Login");
+        }
         [HttpPost]
         [Authorize(Policy = "Administrators")]
         [HttpPost]
@@ -114,7 +120,6 @@ namespace HotelsManager.Controllers
                     User user = repo.Get(id);
                     if (user != null)
                     {
-                        Console.WriteLine("view dlete");
                         return View("~/Views/Admin/User/DeleteUser.cshtml", user);
                     }
                     return NotFound();
@@ -129,10 +134,8 @@ namespace HotelsManager.Controllers
         [Authorize(Policy = "Administrators")]
         public ActionResult DeleteUser(int id)
         {
-            Console.WriteLine("dsasdadsa");
             if (repo.Get(id) == null)
             {
-                Console.WriteLine("slhashs");
                 return NotFound();
             }
             else
