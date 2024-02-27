@@ -29,14 +29,10 @@ namespace HotelsManager.Controllers
                 {
                     var count = 0;
                     foreach(var i in repo.GetHotels()) { 
-                        Console.WriteLine(i.Id);
                         count++;
                         if (i.Id == id)
                             id = count;
                     }
-                    Console.WriteLine("count: " + count);
-                    Console.WriteLine("id: " + id);
-                    Console.WriteLine(">>" + repo.GetHotels()[id - 1].Stars);
                     Order new_order = new Order(username: user.Identity.Name,
                                                 hotelId: repo.GetHotels()[id - 1].Id,
                                                 hotelName: repo.GetHotels()[id - 1].Name,
@@ -46,11 +42,9 @@ namespace HotelsManager.Controllers
                     repo.CreateOrder(new_order);
                 }
                 catch (Exception e){
-                    Console.WriteLine(e.Message);
                     return View("~/Views/Hotel/Index.cshtml", repo.GetHotels());
                 }
                 return View("~/Views/Hotel/Index.cshtml", repo.GetHotels());
-                /*return base.RedirectToAction(controllerName: "Hotel", actionName: "SuccessOrder");*/
             }
             else // если зашел по кнопке
                 return View("~/Views/Hotel/Index.cshtml", repo.GetHotels());
