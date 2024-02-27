@@ -1,0 +1,10 @@
+@{
+    ViewData["Title"] = "К сожалению, у вас нет заказов!";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <p>Здравствуйте, у вас покак нет заказов :c</p>
+    <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Index", "Hotel")'">Перейти на просмотр отелей</button>
+</div>
