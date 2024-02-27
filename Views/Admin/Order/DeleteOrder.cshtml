@@ -1,0 +1,33 @@
+@model HotelsManager.Models.Orders.Order
+@{
+    ViewData["Title"] = "Удаление пользователя";
+}
+<h2>@ViewBag.Title</h2>
+<div>
+    <dl class="dl-horizontal">
+        <dt>Имя клиента</dt>
+        <dd>
+            @Model.UserName
+        </dd>
+
+        <dt>Id отеля</dt>
+        <dd>
+            @Model.HotelId
+        </dd>
+    </dl>
+
+    <div>
+        <form asp-controller="AdminOrder" asp-action="DeleteOrder" method="post">
+            <div class="form-group">
+                <button type="submit" class="btn btn-outline-danger m-3 ms-0" value="Удалить">Удалить</button>
+            </div>
+        </form>
+        @{
+            string id1 = (@Model.Id).ToString();
+        }
+        <button type="button" class="btn btn-outline-secondary" onclick="location.href='@Url.Action("EditOrder", "AdminOrder", new { id = id1})'">Вернуться к редактированию</button>
+        <br />
+        <br />
+        <button type="button" class="btn btn-outline-info" onclick="location.href='@Url.Action("Index", "AdminOrder")'">Вернуться к списку заказов</button>
+    </div>
+</div>
