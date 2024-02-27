@@ -26,8 +26,6 @@ namespace HotelsManager.Controllers
             return View("~/Views/Admin/Order/Index.cshtml", repo.GetOrders());
         }
 
-        //
-
         [Authorize(Policy = "Administrators")]
         public ActionResult Details(int id)
         {
@@ -47,7 +45,6 @@ namespace HotelsManager.Controllers
         [Authorize(Policy = "Administrators")]
         public ActionResult CreateOrder(Order order)
         {
-            Console.WriteLine("> " + order.HotelStars);
             repo.Create(order);
             return RedirectToAction("Index");
         }
@@ -98,7 +95,6 @@ namespace HotelsManager.Controllers
                 Order order = repo.Get(id);
                 if (order != null)
                 {
-                    Console.WriteLine("view dlete");
                     return View("~/Views/Admin/Order/DeleteOrder.cshtml", order);
                 }
                 return NotFound();
