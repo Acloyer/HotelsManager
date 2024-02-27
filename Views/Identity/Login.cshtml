@@ -8,14 +8,49 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<form asp-action="Login" method="post" class="w-25 p-3">
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+
+<form id="loginForm" asp-action="Login" method="post" class="w-25 p-3">
     <input type="hidden" asp-for="@returnUrl">
+    <p id="warning1" class="hidden"><span style="color:red;">Длина логина должно быть от 4 до 20 символов и содержать только латиницу.</span></p>
+    <p id="warning2" class="hidden"><span style="color:red;">Длина пароля должно быть от 6 до 20 символов.</span></p>
+
 
     <label asp-for="@login" class="form-label">Login</label>
-    <input asp-for="@login" type="text" class="form-control">
+    <input id="username" asp-for="@login" type="text" class="form-control">
 
     <label asp-for="@password" class="form-label">Password</label>
-    <input asp-for="@password" type="password" class="form-control">
+    <input id="password" asp-for="@password" type="password" class="form-control">
 
-    <button type="submit" class="btn btn-primary m-3 ms-0">Login</button>
+    <button id="warning" type="submit" class="btn btn-primary m-3 ms-0" disabled>Auth</button>
 </form>
+
+<script>
+    document.getElementById('loginForm').addEventListener('input', function (event) {
+        event.preventDefault();
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        var usernameRegex = /^[a-zA-Z0-9_]+$/;
+        if (!usernameRegex.test(username) || username.length < 4 || username.length > 20) {
+            document.getElementById('warning1').classList.remove('hidden');
+        } else {
+            document.getElementById('warning1').classList.add('hidden');
+        }
+        if (password.length < 6 || password.length > 20) {
+            document.getElementById('warning2').classList.remove('hidden');
+        } else {
+            document.getElementById('warning2').classList.add('hidden');
+        }
+
+        if (!usernameRegex.test(username) || username.length < 4 || username.length > 20 || password.length < 6 || password.length > 20)
+            /*document.getElementById('warning').classList.add('hidden');*/
+            document.getElementById('warning').setAttribute('disabled', '');
+        else
+            /*document.getElementById('warning').classList.remove('hidden');*/
+            document.getElementById('warning').removeAttribute('disabled');
+    });
+</script>
