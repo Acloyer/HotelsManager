@@ -1,0 +1,52 @@
+@model HotelsManager.Models.Users.User
+@{
+    ViewData["Title"] = "Редактирование пользователя";
+}
+
+<h2>@ViewData["Title"].</h2>
+
+<link rel="stylesheet" href="~/EditUser.cshtml.css" asp-append-version="true" />
+<script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    $('body').on('click', '.password-control', function () {
+        if ($('#password-input').attr('type') == 'text') {
+            $(this).removeClass('view');
+            $('#password-input').attr('type', 'password');
+        } else {
+            $(this).addClass('view');
+            $('#password-input').attr('type', 'text');
+        }
+        return false;
+    });
+</script>
+
+<form asp-action="EditUser" asp-controller="Admin">
+    <div>
+        <input type="hidden" asp-for="Id" />
+        <div class="form-group">
+            <label asp-for="Name">Введите имя: </label>
+            <input type="text" asp-for="Name" class="form-control" required>
+        </div>
+        <br />
+        <div class="form-group">
+            <div style="font-size: 14px; position: relative;">
+                <div class="password">
+                    <label asp-for="Password">Password: </label>
+                    <input asp-for="Password" id="password-input" class="form-control" required />
+                    <a href="#" class="password-control view" style="margin-left: 10px; margin-top: 18px;"></a>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-outline-success">Сохранить</button>
+            @{
+                string id1 = (@Model.Id).ToString();
+            }
+            <button type="button" class="btn btn-outline-danger" onclick="location.href='@Url.Action("DeleteUser", "Admin", new { id = id1})'">Удалить</button>
+
+        </div>
+    </div>
+</form>
+
+<div>
+    <br />
+    <button type="button"  class="btn btn-outline-info" onclick="location.href='@Url.Action("UserList", "Admin")'">Вернуться к списку пользователей</button>
+</div>

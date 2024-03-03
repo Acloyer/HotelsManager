@@ -1,0 +1,41 @@
+@model HotelsManager.Models.Orders.Order
+
+@{
+    ViewData["Title"] = "Новый заказ";
+}
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="CreateOrder" asp-controller="AdminOrder">
+    <div>
+        <div class="form-group">
+            <label asp-for="UserName">Имя клиента: </label>
+            <input type="text" asp-for="UserName" class="form-control form-control-sm" required/>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="HotelId">Id отеля: </label>
+            <input type="text" oninput="limitInput_int(this)" asp-for="HotelId" min="1" class="form-control form-control-sm" required/>
+        </div>
+
+        <div class="form-group">
+            <br />
+            <button type="submit" class="btn btn-outline-success">Создать</button>
+        </div>
+    </div>
+</form>
+
+<div>
+    <br />
+    <button type="button" class="btn btn-outline-secondary" onclick="location.href='@Url.Action("Index", "AdminOrder")'">Вернуться к списку</button>
+</div>
+
+<script>
+    function limitInput_int(input) {
+        input.value = input.value.replace(/\D/g, '');
+
+        var value = parseInt(input.value);
+        if (value < 1 || value > 1000000) {
+            input.value = Math.min(Math.max(value, 1), 1000000);
+        }
+    }
+</script>

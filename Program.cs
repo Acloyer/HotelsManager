@@ -1,93 +1,57 @@
-﻿using System.Net;
-using System.Reflection;
-using HotelsManager.Models;
-using HotelsManager.Controllers;
-using HotelsManager.Attributes.Base;
-using HotelsManager.Controllers.Base;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using HotelsManager.Models.Users;
+using HotelsManager.Models.Hotels;
+using HotelsManager.Models.Orders;
+using HotelsManager.Models.Repository;
+using HotelsManager.Models.HotelsRepository;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+
+var builder = WebApplication.CreateBuilder(args);
+// Dupper
+
+/*string connectionString = "Server=.\\SQLEXPRESS;Initial Catalog=HotelsDB;Integrated Security=True";*/
+string connectionString = @"Data Source=LAPTOP-8U7UGFTE; Initial Catalog = HotelsDB; Integrated Security = SSPI; TrustServerCertificate = True;";
+builder.Services.AddTransient<IUserRepository, UserRepository>(provider => new UserRepository(connectionString));
+builder.Services.AddTransient<IOrderRepository, OrderRepository>(provider => new OrderRepository(connectionString));
+builder.Services.AddTransient<IHotelRepository, HotelRepository>(provider => new HotelRepository(connectionString));
+builder.Services.AddControllersWithViews();
+//
 
 
-HttpListener httpListener = new HttpListener();
-// const string connectionString = @"Data Source=LAPTOP-8U7UGFTE; Initial Catalog = HotelsDb; Integrated Security = SSPI;TrustServerCertificate=True;";
-const int port = 8080;
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Identity/Login";
+        options.ReturnUrlParameter = "returnUrl";
 
-httpListener.Prefixes.Add($"http://*:{port}/");
+        options.AccessDeniedPath = "/Identity/Forbidden";
+    });
 
-httpListener.Start();
-
-Console.WriteLine($"Server started on port {port}...");
-
-while (true)
+builder.Services.AddAuthorization(options =>
 {
-    var context = await httpListener.GetContextAsync();
-
-    var endpointItems = context.Request.Url?.AbsolutePath?.Split("/", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-
-    if (endpointItems == null || endpointItems.Any() == false)
+    options.AddPolicy("Administrators", (policyBuilder) =>
     {
-        await new HomeController(){
-            HttpContext = context,
-        }.HomePageAsync();
-        context.Response.Close();
-        continue;
-    }
+        policyBuilder.RequireClaim(ClaimTypes.Role, "admin");
+    });
+});
 
-    var controllerType = Assembly.GetExecutingAssembly()
-        .GetTypes()
-        .Where(t => t.BaseType == typeof(ControllerBase))
-        .FirstOrDefault(t => t.Name.ToLower() == $"{endpointItems[0]}controller");
 
-    if (controllerType == null)
-    {
-        context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-        context.Response.Close();
-        continue;
-    }
+var app = builder.Build();
 
-    string normalizedRequestHttpMethod = context.Request.HttpMethod.ToLower(); 
+app.UseExceptionHandler("/Home/Error");
+app.UseHsts();
 
-    var controllerMethod = controllerType
-        .GetMethods()
-        .FirstOrDefault(m => {
-            return m.GetCustomAttributes()
-                .Any(attr => {
-                    if(attr is HttpAttribute httpAttribute) {
-                        bool isHttpMethodCorrect = httpAttribute.MethodType.Method.ToLower() == normalizedRequestHttpMethod;
+app.UseStaticFiles();
 
-                        if(isHttpMethodCorrect) {
-                            if(endpointItems.Length == 1 && httpAttribute.NormalizedRouting == null)
-                                return true;
+app.UseRouting();
 
-                            else if(endpointItems.Length > 1) {
-                                if(httpAttribute.NormalizedRouting == null)
-                                    return false;
-                                else {
-                                    var expectedEndpoint = string.Join('/', endpointItems[1..]).ToLower();
-                                    var actualEndpoint = httpAttribute.NormalizedRouting;
+app.UseAuthentication();
+app.UseAuthorization();
 
-                                    return actualEndpoint == expectedEndpoint;
-                                }
-                            }
-                        }
-                    }
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Loading}/{id?}");
 
-                    return false;
-                });
-        });
-
-    if (controllerMethod == null)
-    {
-        context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-        context.Response.Close();
-        continue;
-    }
-
-    var controller = (Activator.CreateInstance(controllerType) as ControllerBase)!;
-    controller.HttpContext = context;
-    var methodCall = controllerMethod.Invoke(controller, parameters: new[] { context });
-
-    if (methodCall != null && methodCall is Task asyncMethod) {
-        await asyncMethod.WaitAsync(CancellationToken.None);
-    }
-    
-    context.Response.Close();
-}
+app.Run();

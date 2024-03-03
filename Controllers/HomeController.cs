@@ -1,19 +1,41 @@
 namespace HotelsManager.Controllers;
 
-using System.Net;
-using HotelsManager.Attributes;
-using HotelsManager.Controllers.Base;
+using System.Diagnostics;
+using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using HotelsManager.Models;
+using HotelsManager.Models.Users;
+using HotelsManager.Models.Repository;
 
-public class HomeController : ControllerBase
+public class HomeController : Controller
 {
-    [HttpGet]
-    public async Task HomePageAsync()
+    IUserRepository repo;
+    public HomeController(IUserRepository r)
     {
-        using var writer = new StreamWriter(base.HttpContext.Response.OutputStream);
+        repo = r;
+    }
 
-        var pageHtml = await File.ReadAllTextAsync("Views/Home.html");
-        await writer.WriteLineAsync(pageHtml);
-        base.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
-        base.HttpContext.Response.ContentType = "text/html";
+    public ActionResult Index()
+    {
+        return View(repo.GetUsers());
+    }
+
+    public ActionResult Loading()
+    {
+        return View("~/Views/Home/Loading.cshtml");
+    }
+
+    [HttpGet]
+    [Authorize]
+    public IActionResult Home()
+    {
+        return View();
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
