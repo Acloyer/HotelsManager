@@ -1,0 +1,18 @@
+﻿@inject IAuthorizationService authenticationService
+
+@{
+    ViewData["Title"] = "Home Page";
+    var administratorsAuthorizationResult = await authenticationService.AuthorizeAsync(base.User, "Administrators");
+    bool isAdmin = administratorsAuthorizationResult.Succeeded;
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Привет @ViewData["Username"]!</h1>
+    @if(isAdmin) {
+        <a class="nav-link text-dark">Вы являетесь админ</a>
+    }
+    else{
+        <a class="nav-link text-dark">Вы являетесь обычным пользователем</a>
+    }
+</div>

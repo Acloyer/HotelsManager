@@ -1,0 +1,19 @@
+@model ProfileViewModel
+
+@{
+    ViewData["Title"] = "Ваш профиль";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table>
+    <tr>
+        <td><b>Ваш логин</b>: @Model.Login</td>
+    </tr>
+    <tr>
+        <td><b>Ваш пароль</b>: @Model.Password</td>
+    </tr>
+    <tr>
+        <td><b>Всего заказов</b>: @Model.OrdersCount</td> 
+    </tr>
+</table>

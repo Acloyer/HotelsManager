@@ -1,0 +1,50 @@
+@model HotelsManager.Models.Hotels.Hotel
+@{
+    ViewData["Title"] = "Удаление отеля";
+}
+<h2>@ViewBag.Title</h2>
+<div>
+    <dl class="dl-horizontal">
+        <dt>Имя</dt>
+        <dd>
+            @Model.Name
+        </dd>
+        
+        <dt>Звезды</dt>
+        <dd>
+            @Model.Stars
+        </dd>
+
+        <dt>Цена</dt>
+        <dd>
+            @Model.Price@Model.Currency
+        </dd>
+    </dl>
+
+    <div>
+        @*<form asp-controller="AdminHotel" asp-action="DeleteHotel" method="post">*@
+        <form asp-controller="AdminHotel" asp-action="DeleteHotel" method="post">
+            <div class="form-group">
+                <button type="submit" class="btn btn-outline-danger m-3 ms-0"
+                        value="Удалить" onclick="playExplosionSound()">
+                    Взорвать отель 🔥🔥
+                </button>
+            </div>
+        </form>
+        @{
+            string id1 = (@Model.Id).ToString();
+        }
+        <button type="button" class="btn btn-outline-secondary" onclick="location.href='@Url.Action("EditHotel", "AdminHotel", new { id = id1})'">Вернуться к редактированию</button>
+        <br />
+        <br />
+        <button type="button" class="btn btn-outline-info" onclick="location.href='@Url.Action("Index", "AdminHotel")'">Вернуться к списку отелей</button>
+    </div>
+</div>
+
+<script>
+    function playExplosionSound() {
+        var audio = document.getElementById("explosionAudio");
+        audio.play();
+        console.log("взрыв");
+    }
+</script>

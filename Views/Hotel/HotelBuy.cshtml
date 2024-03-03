@@ -1,0 +1,33 @@
+﻿@model HotelViewModel
+
+@{
+    ViewData["Title"] = "Оформление покупки номера в отели.";
+
+    string userName = User.Identity.Name;
+    string hotelName = string.Empty;
+    int hotelId = 0;
+    int hotelPrice = 0;
+    string hotelCurrency = string.Empty;
+    foreach (var hotel in Model.Hotels)
+    {
+        if(Model.Id == hotel.Id){
+            hotelId = hotel.Id;
+            hotelName = hotel.Name;
+            hotelCurrency = hotel.Currency;
+        }
+    }
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <tr>
+        <th>Название отеля</th>
+        <th>Цена</th>
+    </tr>
+</table>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Поздравляем!</strong> Вы успешно заказали номер в отеле!
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<a class="btn btn-primary m-3 ms-0" asp-controller="Hotel" asp-action="HotelBuy">Купить номер</a>

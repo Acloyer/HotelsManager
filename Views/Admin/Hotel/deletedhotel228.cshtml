@@ -1,0 +1,43 @@
+@model IEnumerable<HotelsManager.Models.Hotels.Hotel>
+@{
+    ViewData["Title"] = "Список отелей";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <button type="button" class="btn btn-outline-success" onclick="location.href='@Url.Action("CreateHotel", "AdminHotel")'">Создать отель</button>
+</p>
+
+<div>
+    <audio autoplay>
+        <source src="~/explosion.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+</div>
+
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Имя</th>
+        <th>Цена</th>
+        <th>Управление</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>@item.Id</td>
+        <td>@item.Name</td>
+        <td>@item.Price@item.Currency</td>
+        <td>
+            @{
+                string id1 = (item.Id).ToString();
+            }
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("EditHotel", "AdminHotel", new { id = id1})'">Редактировать</button>@* <b>|</b>*@
+            @*<button type="button" class="btn btn-outline-danger" onclick="location.href='@Url.Action("DeleteHotel", "AdminHotel", new { id = id1})'">Взорвать отель 🔥🔥</button>*@
+        </td>
+    </tr>
+
+    }
+</table>

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<HotelsManager.Models.Users.User>
+@{
+    ViewData["Title"] = "Список пользователей";
+    string returnUrl = ViewData["returnUrl"] as string;
+}
+
+<h2>@ViewData["Title"]</h2>
+<p>
+    <button type="button" class="btn btn-outline-success" onclick="location.href='@Url.Action("CreateUser", "Admin")'">Создать пользователя</button>
+</p>
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Имя</th>
+        <th>Пароль</th>
+        <th>Управление</th>
+    </tr>
+
+    @foreach (var item in Model)
+{
+    <tr>
+        <td>@item.Id</td>
+        <td>@item.Name</td>
+        <td>@item.Password</td>
+
+        <td>
+            @{
+                string id1 = (item.Id).ToString();
+                string _name = @item.Name;
+                string _password = @item.Password;
+            }
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("EditUser", "Admin", new { id = id1})'">Изменить</button>
+            @*<button type="button" class="btn btn-outline-success" onclick="location.href='@Url.Action("LoginToUserAccount", "Admin", new { rUrl = returnUrl, name = _name, password = _password})'">Войти в его аккаунт</button>*@
+            @*Сделаю потом эту кнопку*@
+        </td>
+    </tr>
+}
+</table>

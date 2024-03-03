@@ -1,0 +1,65 @@
+﻿@inject IAuthorizationService authenticationService
+@model IEnumerable<HotelsManager.Models.Hotels.Hotel>
+@{
+    ViewData["Title"] = "Список отелей";
+    var administratorsAuthorizationResult = await authenticationService.AuthorizeAsync(base.User, "Administrators");
+    bool isAdmin = administratorsAuthorizationResult.Succeeded;
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<table class="table">
+    <tr>
+        @if(isAdmin){
+            <th>Id</th>
+        }
+        <th>Название отеля</th>
+        <th>Звезды</th>
+        <th>Цена за номер</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @*<td>@item.Id</td>*@
+            @if(isAdmin){
+                <th>@item.Id</th>
+            }
+            <td>@item.Name</td>
+            <td>@item.Stars</td>
+            <td>@item.Price@item.Currency</td>
+
+            <td>
+                <a id="btnShowNotification" runat="server" OnClick="showNotification('Вы успешно купили номер в отеле. <hr /> Подробнее про ваш заказ можете ознакомиться в списке ваших заказов.')" asp-controller="Hotel" asp-action="Index" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm m-3 ms-0">Купить номер</a>
+            </td>
+        </tr>
+    }
+</table>
+<div id="notificationContainer" class="notification"></div>
+
+<script>
+    function showNotification(message) {
+        var notificationHtml = `
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Поздравляем!</strong> ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+
+        var $notificationContainer = $('#notificationContainer');
+        var $notification = $(notificationHtml);
+
+        $notificationContainer.prepend($notification);
+
+        $notification.fadeIn();
+
+        setTimeout(function () {
+            $notification.alert('close');
+        }, 2000);
+    }
+</script>
